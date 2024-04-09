@@ -1,0 +1,11 @@
+.pagination-link {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  background-color: lightgray;
+  color: #000;
+  text-decoration: none;
+}
+.pagination-active {
+text-decoration: none;
+}
