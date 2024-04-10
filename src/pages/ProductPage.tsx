@@ -1,5 +1,5 @@
 import { Loader } from "../components/Loader";
-import { ProductContext } from "../components/ProductContext";
+import { ProductContext } from "../context/ProductContext";
 import { useContext } from "react";
 import { FilterComponent } from "../components/FilterComponent/FilterComponent";
 import { ProductList } from "../components/ProductList/ProductList";

@@ -1,9 +1,9 @@
 .product-image {
   transition: transform 0.3s ease;
-}
 
-.product-image:hover {
-  transform: scale(1.1);
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .card {
@@ -12,11 +12,11 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 26px;
-}
 
-.card-content {
-  height: 250px;
-  gap:10px;
+  &-content {
+    height: 250px;
+    gap:10px;
+  }
 }
 
 .image img {

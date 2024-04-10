@@ -3,9 +3,9 @@ import { Category, Price, SortBy } from "../enums/filterEnums";
 import { PRICE_300, PRICE_500, PRICE_1000 } from "../utils/constants";
 
 export const preparedProducts = (
-  products: Product[], 
-  categoryFilter: string, 
-  priceFilter: string, 
+  products: Product[],
+  categoryFilter: string,
+  priceFilter: string,
   sortBy: string
   ) => {
   let filteredProducts = [...products];
@@ -24,7 +24,7 @@ export const preparedProducts = (
         (product) => product.category === 'tablets'
       );
       break;
-    case Category.Laptops: 
+    case Category.Laptops:
       filteredProducts = products.filter(
         (product) => product.category === 'laptops'
       );
@@ -59,7 +59,7 @@ export const preparedProducts = (
   }
 
   switch (sortBy) {
-    case SortBy.All: 
+    case SortBy.All:
       break;
     case SortBy.PriceLowToHigh:
       filteredProducts = filteredProducts.sort((a, b) => a.price - b.price);
@@ -71,4 +71,26 @@ export const preparedProducts = (
   }
 
   return filteredProducts;
+}
+
+export const getSearchedProducts = (
+  products: Product[],
+  { query, category }: { query: string; category: string }
+) => {
+  let preparedProducts = [...products];
+  const normalizedQuery = query.trim().toLowerCase();
+
+  if (category !== Category.All) {
+    preparedProducts = preparedProducts.filter(
+      (product) => product.category === category
+    );
+  }
+
+  if (query) {
+    preparedProducts = preparedProducts.filter((product) =>
+      product.name.toLowerCase().includes(normalizedQuery)
+    );
+  }
+
+  return preparedProducts;
 }

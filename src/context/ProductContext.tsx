@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { ProductContextProps } from "../types/ProductContextProps";
 import { Product } from "../types/Product";
-import { preparedProducts } from "../productUtils/preparedProducts";
-import { getSearchedProducts } from "../productUtils/getSearchedProducts";
+import { preparedProducts } from "../utils/productUtils";
+import { getSearchedProducts } from "../utils/productUtils";
 import { PRODUCTS_PER_PAGE } from "../utils/constants";
 
 export const ProductContext = React.createContext<ProductContextProps>({
@@ -43,9 +43,9 @@ export const ProductProvider: React.FC<Props> = ({ children }) => {
   const [error, setError] = useState("");
 
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [categoryFilter, setCategoryFilter] = useState("all");
-  const [priceFilter, setPriceFilter] = useState("all");
-  const [sortBy, setSortBy] = useState("all");
+  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [priceFilter, setPriceFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('all');
 
   const [currentPage, setCurrentPage] = useState(0);
   const [productsPerPage, setProductsPerPage] = useState(PRODUCTS_PER_PAGE);
@@ -62,7 +62,7 @@ export const ProductProvider: React.FC<Props> = ({ children }) => {
   );
 
   const handleFilterChange = () => {
-    setProductsPerPage(8);
+    setProductsPerPage(PRODUCTS_PER_PAGE);
     setCurrentPage(0);
   };
 

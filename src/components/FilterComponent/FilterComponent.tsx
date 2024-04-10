@@ -1,4 +1,4 @@
-import { ProductContext } from "../ProductContext";
+import { ProductContext } from "../../context/ProductContext";
 import { useContext } from "react";
 import React from "react";
 import "./FilterComponent.scss";
@@ -58,8 +58,8 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <div className="select mr-4 mb-4">
             <select
               value={priceFilter}
-              onChange={(e) => {
-                setPriceFilter(e.target.value);
+              onChange={(event) => {
+                setPriceFilter(event.target.value);
                 onFilterChange();
               }}
             >
@@ -84,8 +84,8 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <div className="select mr-4 mb-4">
             <select
               value={sortBy}
-              onChange={(e) => {
-                setSortBy(e.target.value);
+              onChange={(event) => {
+                setSortBy(event.target.value);
                 onFilterChange();
               }}
             >
