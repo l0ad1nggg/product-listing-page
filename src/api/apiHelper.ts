@@ -1,4 +1,4 @@
-export function request(product: string) {
+export const request = (product: string) => {
   return fetch(`${product}.json`)
     .then((res) => res.json())
     .then((data) => {

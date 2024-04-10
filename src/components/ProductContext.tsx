@@ -1,7 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react'
 import { ProductContextProps } from '../types/ProductContextProps'
 import { Product } from '../types/Product';
+import { preparedProducts } from '../utils/preparedProducts';
+import { getSearchedProducts } from '../utils/getSearchedProducts';
+import { PRODUCTS_PER_PAGE } from '../utils/constants';
 
 export const ProductContext = React.createContext<ProductContextProps>({
   products: [],
@@ -43,7 +45,7 @@ export const ProductProvider: React.FC<Props> = ({ children }) => {
   const [sortBy, setSortBy] = useState('all');
 
   const [currentPage, setCurrentPage] = useState(0);
-  const productsPerPage = 8;
+  const productsPerPage = PRODUCTS_PER_PAGE;
   const pageCount = Math.ceil(filteredProducts.length / productsPerPage);
 
   const handlePageClick = (data: { selected: number }) => {
@@ -56,75 +58,8 @@ export const ProductProvider: React.FC<Props> = ({ children }) => {
     offset + productsPerPage
   );
 
-
-  const preparedProducts = () => {
-    let filteredProducts = [...products];
-  
-    switch (categoryFilter) {
-      case 'all':
-
-        break;
-      case 'phones':
-        filteredProducts = products.filter(
-          (product) => product.category === 'phones'
-        );
-        break;
-      case 'tablets':
-        filteredProducts = products.filter(
-          (product) => product.category === 'tablets'
-        );
-        break;
-      case 'laptops': 
-        filteredProducts = products.filter(
-          (product) => product.category === 'laptops'
-        );
-        break;
-      default:
-    }
-
-    switch (priceFilter) {
-      case 'all':
-        break;
-      case 'under300':
-        filteredProducts = filteredProducts.filter(
-          (product) => product.price < 300
-        );
-        break;
-      case '300to500':
-        filteredProducts = filteredProducts.filter(
-          (product) => product.price >= 300 && product.price <= 500
-        );
-        break;
-      case '500to1000':
-        filteredProducts = filteredProducts.filter(
-          (product) => product.price > 500 && product.price <= 1000
-        );
-        break;
-      case 'over1000':
-        filteredProducts = filteredProducts.filter(
-          (product) => product.price > 1000
-        );
-        break;
-      default:
-    }
-
-    switch (sortBy) {
-      case 'all': 
-        break;
-      case 'priceLowToHigh':
-        filteredProducts = filteredProducts.sort((a, b) => a.price - b.price);
-        break;
-      case 'priceHighToLow':
-        filteredProducts = filteredProducts.sort((a, b) => b.price - a.price);
-        break;
-      default:
-    }
-
-    return filteredProducts;
-  }
-
   useEffect(() => {
-    setFilteredProducts(preparedProducts());
+    setFilteredProducts(preparedProducts(products, categoryFilter, priceFilter, sortBy));
   }, [categoryFilter, priceFilter, sortBy, products, setFilteredProducts]);
 
   useEffect(() => {
@@ -149,29 +84,6 @@ export const ProductProvider: React.FC<Props> = ({ children }) => {
     getProducts();
 
   }, []);
-
-
-  function getSearchedProducts(
-    products: Product[],
-    { query, category }: { query: string; category: string }
-  ) {
-    let preparedProducts = [...products];
-    const normalizedQuery = query.trim().toLowerCase();
-
-    if (category !== "all") {
-      preparedProducts = preparedProducts.filter(
-        (product) => product.category === category
-      );
-    }
-
-    if (query) {
-      preparedProducts = preparedProducts.filter((product) =>
-        product.name.toLowerCase().includes(normalizedQuery)
-      );
-    }
-
-    return preparedProducts;
-  }
 
   const [query, setQuery] = useState("");
 

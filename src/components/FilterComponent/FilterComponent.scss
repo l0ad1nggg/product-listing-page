@@ -1,4 +1,6 @@
-@media (max-width: 768px) {
+@import '../../utils/mixins.scss';
+
+@include onMobile {
   .container {
     flex-direction: column;
     align-items: left;

@@ -1,3 +1,5 @@
+@import '../../utils/mixins.scss';
+
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(1fr));
@@ -6,13 +8,13 @@
   margin-bottom: 50px;
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
+@include onTablet {
   .grid-container {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (min-width: 1024px) {
+@include onDesktop {
   .grid-container {
     grid-template-columns: repeat(4, 1fr);
   }

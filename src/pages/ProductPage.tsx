@@ -3,10 +3,9 @@ import { ProductContext } from "../components/ProductContext";
 import { useContext } from "react";
 import { FilterComponent } from "../components/FilterComponent/FilterComponent";
 import { ProductList } from "../components/ProductList/ProductList";
-import { Error } from "../components/Error";
-import { NotFoundProducts } from "../components/NotFoundProducts";
+import { Error } from "../components/Error/Error";
+import { NotFoundProducts } from "../components/NotFoundProducts/NotFoundProducts";
 import ReactPaginate from 'react-paginate';
-import './ProductPage.scss';
 
 export const ProductPage: React.FC = () => {
   const { 
@@ -31,12 +30,12 @@ export const ProductPage: React.FC = () => {
         nextLabel={"Next"}
         pageCount={pageCount}
         onPageChange={handlePageClick}
-        containerClassName={"pagination is-centered is-justify-content-space-between"}
-        previousLinkClassName={"pagination-previous is-flex is-medium is-primary has-text-blue"}   
+        containerClassName={"pagination is-flex"}
+        previousLinkClassName={"pagination-previous is-flex"}   
         nextLinkClassName={"pagination-next"}
         disabledClassName={"pagination-disabled"}
-        activeClassName={"pagination-active is-flex is-justify-content-center is-primary px-2 py-2 has-text-white"}
-        pageLinkClassName={"pagination-link"}
+        activeClassName={"pagination-active has-background-grey-lighter"}
+        pageLinkClassName={"pagination-link is-flex is-justify-content-center is-align-items-center cursor-pointer has-background-primary"}
       />}
     </>
   );

@@ -2,6 +2,7 @@ import { ProductContext } from "../ProductContext";
 import { useContext } from "react";
 import React from "react";
 import "./FilterComponent.scss";
+import { Category, Price, SortBy } from "../../utils/filterEnums";
 
 export const FilterComponent: React.FC = () => {
   const {
@@ -24,12 +25,16 @@ export const FilterComponent: React.FC = () => {
               value={categoryFilter}
               onChange={(event) => handleCategoryChange(event.target.value)}
             >
-              <option value="all">All Categories</option>
-              <option value="phones">Phones</option>
-              <option value="tablets">Tablets</option>
-              <option value="laptops">Laptops</option>
+              <option value={Category.All}>All Categories</option>
+
+              <option value={Category.Phones}>Phones</option>
+
+              <option value={Category.Tablets}>Tablets</option>
+
+              <option value={Category.Laptops}>Laptops</option>
             </select>
           </div>
+
           <span className="icon has-text-success is-left">
             <i className="fas fa-tag"></i>
           </span>
@@ -41,12 +46,17 @@ export const FilterComponent: React.FC = () => {
               value={priceFilter}
               onChange={(e) => setPriceFilter(e.target.value)}
             >
-              <option value="all">All Prices</option>
-              <option value="under300">Under $300</option>
-              <option value="300to500">$300 - $500</option>
-              <option value="500to1000">$500 - $1000</option>
-              <option value="over1000">Over $1000</option>
+              <option value={Price.All}>All Prices</option>
+
+              <option value={Price.Under300}>Under $300</option>
+
+              <option value={Price.From300To500}>$300 - $500</option>
+
+              <option value={Price.From500To1000}>$500 - $1000</option>
+
+              <option value={Price.Over1000}>Over $1000</option>
             </select>
+
             <span className="icon has-text-info has-text-success">
               <i className="fas fa-money-bill-wave"></i>
             </span>
@@ -59,10 +69,13 @@ export const FilterComponent: React.FC = () => {
               value={sortBy} 
               onChange={(e) => setSortBy(e.target.value)}
             >
-              <option value="all">Price: All</option>
-              <option value="priceLowToHigh">Price: Low to High</option>
-              <option value="priceHighToLow">Price: High to Low</option>
+              <option value={SortBy.All}>Price: All</option>
+
+              <option value={SortBy.PriceLowToHigh}>Price: Low to High</option>
+
+              <option value={SortBy.PriceHighToLow}>Price: High to Low</option>
             </select>
+            
             <span className="icon has-text-success">
               <i className="fas fa-chart-line"></i>
             </span>
