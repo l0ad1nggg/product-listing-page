@@ -1,5 +1,5 @@
 import { Product } from "../types/Product";
-import { Category } from "./filterEnums";
+import { Category } from "../enums/filterEnums";
 
 export const getSearchedProducts = (
   products: Product[],

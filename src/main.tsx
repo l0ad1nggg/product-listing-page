@@ -1,11 +1,11 @@
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import { ProductProvider } from './components/ProductContext.tsx'
-import 'bulma/css/bulma.css';
-import { Root } from './Router.tsx'
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import { ProductProvider } from "./components/ProductContext.tsx";
+import "bulma/css/bulma.css";
+import { RouterComponent } from "./components/RouterComponent.tsx";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <ProductProvider>
-    <Root />
-  </ProductProvider>,
-)
+    <RouterComponent />
+  </ProductProvider>
+);

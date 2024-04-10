@@ -18,9 +18,5 @@ Overview Listing Page is a powerful page designed to help you choose your produc
 - Pagination: Use pagination for faster moving through pages.
 - Context: Used Context for compact management.
 
-## Demo 
-
-Check out the [DEMO LINK]() to see Product Listing Page in action.
-
 Have a nice day!
 

@@ -2,9 +2,15 @@ import { ProductContext } from "../ProductContext";
 import { useContext } from "react";
 import React from "react";
 import "./FilterComponent.scss";
-import { Category, Price, SortBy } from "../../utils/filterEnums";
+import { Category, Price, SortBy } from "../../enums/filterEnums";
 
-export const FilterComponent: React.FC = () => {
+interface FilterComponentProps {
+  onFilterChange: () => void;
+}
+
+export const FilterComponent: React.FC<FilterComponentProps> = ({
+  onFilterChange,
+}) => {
   const {
     categoryFilter,
     priceFilter,
@@ -16,6 +22,11 @@ export const FilterComponent: React.FC = () => {
     handleInputSearch,
   } = useContext(ProductContext);
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleInputSearch(event);
+    onFilterChange();
+  };
+
   return (
     <>
       <div className="container is-flex flex-direction-row">
@@ -23,7 +34,10 @@ export const FilterComponent: React.FC = () => {
           <div className="select mr-4 mb-4">
             <select
               value={categoryFilter}
-              onChange={(event) => handleCategoryChange(event.target.value)}
+              onChange={(event) => {
+                handleCategoryChange(event.target.value);
+                onFilterChange();
+              }}
             >
               <option value={Category.All}>All Categories</option>
 
@@ -44,7 +58,10 @@ export const FilterComponent: React.FC = () => {
           <div className="select mr-4 mb-4">
             <select
               value={priceFilter}
-              onChange={(e) => setPriceFilter(e.target.value)}
+              onChange={(e) => {
+                setPriceFilter(e.target.value);
+                onFilterChange();
+              }}
             >
               <option value={Price.All}>All Prices</option>
 
@@ -65,9 +82,12 @@ export const FilterComponent: React.FC = () => {
 
         <div className="control has-icons-left">
           <div className="select mr-4 mb-4">
-            <select 
-              value={sortBy} 
-              onChange={(e) => setSortBy(e.target.value)}
+            <select
+              value={sortBy}
+              onChange={(e) => {
+                setSortBy(e.target.value);
+                onFilterChange();
+              }}
             >
               <option value={SortBy.All}>Price: All</option>
 
@@ -75,14 +95,13 @@ export const FilterComponent: React.FC = () => {
 
               <option value={SortBy.PriceHighToLow}>Price: High to Low</option>
             </select>
-            
+
             <span className="icon has-text-success">
               <i className="fas fa-chart-line"></i>
             </span>
           </div>
         </div>
       </div>
-      
 
       <div className="field mt-6">
         <label htmlFor="search-query" className="label">
@@ -96,7 +115,7 @@ export const FilterComponent: React.FC = () => {
             className="input is-primary mb-6"
             placeholder="Search products..."
             value={query}
-            onChange={handleInputSearch}
+            onChange={handleInputChange}
           />
         </div>
       </div>

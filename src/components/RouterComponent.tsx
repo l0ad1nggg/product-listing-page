@@ -3,12 +3,12 @@ import {
   Routes,
   Route,
   Navigate,
-} from 'react-router-dom';
-import  App  from './App';
-import { HomePage } from './pages/HomePage';
-import { ProductPage } from './pages/ProductPage';
+} from "react-router-dom";
+import App from "../App";
+import { HomePage } from "../pages/HomePage";
+import { ProductPage } from "../pages/ProductPage";
 
-export const Root = () => (
+export const RouterComponent = () => (
   <Router>
     <Routes>
       <Route path="/" element={<App />}>

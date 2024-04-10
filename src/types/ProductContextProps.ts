@@ -23,4 +23,7 @@ export interface ProductContextProps {
   query: string;
   handleCategoryChange: (newCategory: string) => void;
   handleInputSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  productsPerPage: number;
+  setProductsPerPage: (productsPerPage: number) => void;
+  handleFilterChange: () => void;
 }

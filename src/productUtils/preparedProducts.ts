@@ -1,6 +1,6 @@
 import { Product } from "../types/Product";
-import { Category, Price, SortBy } from "./filterEnums";
-import { PRICE_300, PRICE_500, PRICE_1000 } from "./constants";
+import { Category, Price, SortBy } from "../enums/filterEnums";
+import { PRICE_300, PRICE_500, PRICE_1000 } from "../utils/constants";
 
 export const preparedProducts = (
   products: Product[], 

@@ -1,51 +1,54 @@
-import React, {useState, useEffect} from 'react'
-import { ProductContextProps } from '../types/ProductContextProps'
-import { Product } from '../types/Product';
-import { preparedProducts } from '../utils/preparedProducts';
-import { getSearchedProducts } from '../utils/getSearchedProducts';
-import { PRODUCTS_PER_PAGE } from '../utils/constants';
+import React, { useState, useEffect } from "react";
+import { ProductContextProps } from "../types/ProductContextProps";
+import { Product } from "../types/Product";
+import { preparedProducts } from "../productUtils/preparedProducts";
+import { getSearchedProducts } from "../productUtils/getSearchedProducts";
+import { PRODUCTS_PER_PAGE } from "../utils/constants";
 
 export const ProductContext = React.createContext<ProductContextProps>({
   products: [],
   setProducts: () => {},
   loading: false,
   setLoading: () => {},
-  error: '',
+  error: "",
   setError: () => {},
   filteredProducts: [],
   setFilteredProducts: () => {},
-  categoryFilter: 'all',
+  categoryFilter: "all",
   setCategoryFilter: () => {},
-  priceFilter: 'all',
+  priceFilter: "all",
   setPriceFilter: () => {},
-  sortBy: 'priceLowToHigh',
+  sortBy: "priceLowToHigh",
   setSortBy: () => {},
   pageCount: 0,
   currentPage: 1,
   setCurrentPage: () => {},
   currentPageData: [],
   handlePageClick: () => {},
-  query: '',
+  query: "",
   handleCategoryChange: () => {},
   handleInputSearch: () => {},
-})
+  productsPerPage: PRODUCTS_PER_PAGE,
+  setProductsPerPage: () => {},
+  handleFilterChange: () => {},
+});
 
 type Props = {
-  children: React.ReactNode,
+  children: React.ReactNode;
 };
 
 export const ProductProvider: React.FC<Props> = ({ children }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [categoryFilter, setCategoryFilter] = useState('all');
-  const [priceFilter, setPriceFilter] = useState('all');
-  const [sortBy, setSortBy] = useState('all');
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [priceFilter, setPriceFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("all");
 
   const [currentPage, setCurrentPage] = useState(0);
-  const productsPerPage = PRODUCTS_PER_PAGE;
+  const [productsPerPage, setProductsPerPage] = useState(PRODUCTS_PER_PAGE);
   const pageCount = Math.ceil(filteredProducts.length / productsPerPage);
 
   const handlePageClick = (data: { selected: number }) => {
@@ -58,31 +61,36 @@ export const ProductProvider: React.FC<Props> = ({ children }) => {
     offset + productsPerPage
   );
 
+  const handleFilterChange = () => {
+    setProductsPerPage(8);
+    setCurrentPage(0);
+  };
+
   useEffect(() => {
-    setFilteredProducts(preparedProducts(products, categoryFilter, priceFilter, sortBy));
+    setFilteredProducts(
+      preparedProducts(products, categoryFilter, priceFilter, sortBy)
+    );
   }, [categoryFilter, priceFilter, sortBy, products, setFilteredProducts]);
 
   useEffect(() => {
     const getProducts = () => {
       setLoading(true);
       setTimeout(() => {
-        fetch('api/products.json')
-        .then((res) => res.json())
-        .then((data) => {
-          setProducts(data);
-          setFilteredProducts(data);
-          setLoading(false);
-        })
-        .catch(() => {
-          setError('Error fetching products');
-          setLoading(false);
-        });
+        fetch("api/products.json")
+          .then((res) => res.json())
+          .then((data) => {
+            setProducts(data);
+            setFilteredProducts(data);
+            setLoading(false);
+          })
+          .catch(() => {
+            setError("Error fetching products");
+            setLoading(false);
+          });
       }, 600);
-      
     };
 
     getProducts();
-
   }, []);
 
   const [query, setQuery] = useState("");
@@ -108,7 +116,6 @@ export const ProductProvider: React.FC<Props> = ({ children }) => {
       getSearchedProducts(products, { query, category: categoryFilter })
     );
   }, [query, categoryFilter, products, setFilteredProducts]);
-  
 
   return (
     <ProductContext.Provider
@@ -135,9 +142,12 @@ export const ProductProvider: React.FC<Props> = ({ children }) => {
         query,
         handleCategoryChange,
         handleInputSearch,
+        productsPerPage,
+        setProductsPerPage,
+        handleFilterChange,
       }}
     >
       {children}
     </ProductContext.Provider>
   );
-}
+};

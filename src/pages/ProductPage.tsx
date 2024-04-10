@@ -5,16 +5,18 @@ import { FilterComponent } from "../components/FilterComponent/FilterComponent";
 import { ProductList } from "../components/ProductList/ProductList";
 import { Error } from "../components/Error/Error";
 import { NotFoundProducts } from "../components/NotFoundProducts/NotFoundProducts";
-import ReactPaginate from 'react-paginate';
+import ReactPaginate from "react-paginate";
 
 export const ProductPage: React.FC = () => {
-  const { 
-    error, 
-    loading, 
+  const {
+    error,
+    loading,
     filteredProducts,
     currentPageData,
-    pageCount, 
-    handlePageClick 
+    pageCount,
+    currentPage,
+    handlePageClick,
+    handleFilterChange,
   } = useContext(ProductContext);
 
   return (
@@ -22,21 +24,26 @@ export const ProductPage: React.FC = () => {
       <h1 className="title mt-6">Product Page</h1>
       {loading && <Loader />}
       {error && <Error />}
-      {!loading && <FilterComponent />}
+      {!loading && <FilterComponent onFilterChange={handleFilterChange} />}
       {!filteredProducts.length && !loading && <NotFoundProducts />}
       <ProductList products={currentPageData} />
-      {filteredProducts.length > 0 && !loading && <ReactPaginate
-        previousLabel={"Previous"}
-        nextLabel={"Next"}
-        pageCount={pageCount}
-        onPageChange={handlePageClick}
-        containerClassName={"pagination is-flex"}
-        previousLinkClassName={"pagination-previous is-flex"}   
-        nextLinkClassName={"pagination-next"}
-        disabledClassName={"pagination-disabled"}
-        activeClassName={"pagination-active has-background-grey-lighter"}
-        pageLinkClassName={"pagination-link is-flex is-justify-content-center is-align-items-center cursor-pointer has-background-primary"}
-      />}
+      {filteredProducts.length > 0 && !loading && pageCount > 1 && (
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          pageCount={pageCount}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination is-flex"}
+          previousLinkClassName={"pagination-previous is-flex"}
+          nextLinkClassName={"pagination-next"}
+          disabledClassName={"pagination-disabled"}
+          activeClassName={"pagination-active has-background-grey-lighter"}
+          pageLinkClassName={
+            "pagination-link is-flex is-justify-content-center is-align-items-center cursor-pointer has-background-primary"
+          }
+          forcePage={currentPage}
+        />
+      )}
     </>
   );
 };
